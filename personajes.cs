@@ -1,4 +1,4 @@
-namespace EspacioPersonajes {
+namespace FabricaDePersonajes {
     public class Personaje
     {
         public static string[] tiposPosibles = { "Amsioso", "Aplicado", "Bago", "Suertudo", "Obligado", "Procastinador" };
@@ -26,6 +26,10 @@ namespace EspacioPersonajes {
             // Generar el tipo aleatoriamente
             Random random = new Random();
             Tipo = tiposPosibles[random.Next(tiposPosibles.Length)];
+            Nombre = materias[random.Next(materias.Length)];
+            Apodo = apodoMaterias[random.Next(apodoMaterias.Length)];
+            Carrera = carreras[random.Next(carreras.Length)];
+            FechaNacimiento = DateTime.MinValue;
 
             // Generar atributos aleatorios entre 1 y 10
             Velocidad = random.Next(minRamdom, maxRamdom);
@@ -35,12 +39,6 @@ namespace EspacioPersonajes {
             Memoria = random.Next(minRamdom, maxRamdom);
             Talento = random.Next(minRamdom, maxRamdom);
             Salud = 100; // Multiplicamos por 10 para obtener un valor entre 10 y 100
-
-
-            Nombre = materias[random.Next(materias.Length)];
-            Apodo = apodoMaterias[random.Next(apodoMaterias.Length)];
-            Carrera = carreras[random.Next(carreras.Length)];
-            FechaNacimiento = DateTime.MinValue;
         }
 
         // Método para mostrar los datos del personaje
