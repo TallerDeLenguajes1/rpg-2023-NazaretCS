@@ -2,17 +2,18 @@
 /* Console.WriteLine("Hello, World!"); */
 
 using FabricaDePersonajes;
+using FabricaDeEnemigos;
 public class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        Personaje personaje1 = CrearPersonajePlayer();
+        Personaje Player = CrearPersonajePlayer();
         /* Personaje personaje2 = new Personaje(1,10);
         Personaje personaje3 = new Personaje(3,10);
         Personaje personaje4 = new Personaje(5,10);
  */
         Console.WriteLine("\nDatos del Personaje:");
-        personaje1.MostrarPersonaje();
+        Player.MostrarPersonaje();
 
         /* Console.WriteLine("\nDatos del Personaje: 1");
         personaje2.MostrarPersonaje();
@@ -24,19 +25,16 @@ public class Program
         personaje4.MostrarPersonaje(); */
 
         // Crear un arreglo de listas de personajes
-        List<Personaje>[] gruposDePersonajes = new List<Personaje>[3];
+        List<Enemigo>[] gruposDePersonajes = new List<Enemigo>[3];
         gruposDePersonajes[0] = CargarListasDePersonajes(3,1);
         gruposDePersonajes[1] = CargarListasDePersonajes(3,3);
         gruposDePersonajes[2] = CargarListasDePersonajes(3,5);
         
-
         //Personaje personajeRamdom = gruposDePersonajes[1][2];  // si se puede, hacerlo de eta manera 
         
-        for (int i = 0; i < gruposDePersonajes.Length; i++)
+       /*  for (int i = 0; i < gruposDePersonajes.Length; i++)
         {
             List<Personaje> perso = gruposDePersonajes[i];
-
-
             foreach (var pers in perso)
             {
                 Console.WriteLine("\n\nMostrado de los Datos del Enemigo["+i+"]["+i+"]"); //puse i pero lo importante es que si funciona
@@ -51,7 +49,14 @@ public class Program
                 Console.WriteLine("Talemto: " + pers.Talento);
                 Console.WriteLine("Salud: " + pers.Salud);
             }
-        }
+        } */  //Bloque de código para mostrar el array de listas de enemigos
+
+
+        //Creo una funcion para seleccionar un enemigo valiendome del nivel de personaje y de el array grupoDePersonajes
+        Enemigo Enemigo1 = SeleccionarEnemigo(Player.Nivel, gruposDePersonajes);
+        Console.WriteLine("\n\nDatos Del Enemigo");
+        Enemigo1.MostrarPersonaje();
+
     }
 
     static Personaje CrearPersonajePlayer()
@@ -73,21 +78,32 @@ public class Program
         return nuevoPersonaje;
     }
 
-    static List<Personaje> CargarListasDePersonajes(int CantVueltas, int minRamdom)
+    static List<Enemigo> CargarListasDePersonajes(int CantVueltas, int minRamdom)
     {
         // Crear una listas de personajes
-        List<Personaje> ListaDePersonajes = new List<Personaje>();
+        List<Enemigo> ListaDePersonajes = new List<Enemigo>();
         
         // Inicializar cada elemento del arreglo como una nueva lista vacía, si no lo hago: "NullReferenceException"
         for (int i = 0; i < ListaDePersonajes.Count; i++)
         {
-            ListaDePersonajes = new List<Personaje>();
+            ListaDePersonajes = new List<Enemigo>();
         }
 
         for (int i = 0; i < CantVueltas; i++)
         {
-            ListaDePersonajes.Add(new Personaje(minRamdom,10));
+            ListaDePersonajes.Add(new Enemigo(minRamdom,10));
         }
         return ListaDePersonajes;
     }
+
+    
+    //Creo una funcion para seleccionar un enemigo valiendome del nivel de personaje y de el array grupoDePersonajes
+
+    static Enemigo SeleccionarEnemigo(int NivelPersonaje, List<Enemigo>[] GrupoPersonajes)
+    {
+        Random random = new Random();
+        int numeroEnemigoAleatorio = random.Next(3); 
+        return (GrupoPersonajes[NivelPersonaje][numeroEnemigoAleatorio]);
+    }
 }
+
