@@ -18,7 +18,7 @@ namespace FabricaDeEnemigos {
         public int Salud { get; private set; }
 
         // Constructor de la clase Personaje
-        public Enemigo(int minRamdom, int maxRamdom)
+        public Enemigo(int minRamdom, int maxRamdom, int nivel)
         {
             // Generar el tipo aleatoriamente
             Random random = new Random();
@@ -40,7 +40,7 @@ namespace FabricaDeEnemigos {
             };
 
             Carrera = carreras[random.Next(carreras.Length)];
-            Nivel = 0;
+            Nivel = nivel;
 
             // Generar atributos aleatorios entre 1 y 10
             Velocidad = random.Next(minRamdom, maxRamdom);

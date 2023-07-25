@@ -25,16 +25,16 @@ public class Program
         personaje4.MostrarPersonaje(); */
 
         // Crear un arreglo de listas de personajes
-        List<Enemigo>[] gruposDePersonajes = new List<Enemigo>[3];
-        gruposDePersonajes[0] = CargarListasDePersonajes(3,1);
-        gruposDePersonajes[1] = CargarListasDePersonajes(3,3);
-        gruposDePersonajes[2] = CargarListasDePersonajes(3,5);
-        
+        List<Enemigo>[] gruposDePersonajes = new List<Enemigo>[4];
+        gruposDePersonajes[0] = CargarListasDePersonajes(3,1, 1);
+        gruposDePersonajes[1] = CargarListasDePersonajes(3,3, 2);
+        gruposDePersonajes[2] = CargarListasDePersonajes(3,4, 3);
+        gruposDePersonajes[3] = CargarListasDePersonajes(1,6, 4);
         //Personaje personajeRamdom = gruposDePersonajes[1][2];  // si se puede, hacerlo de eta manera 
         
-       /*  for (int i = 0; i < gruposDePersonajes.Length; i++)
+        /* for (int i = 0; i < gruposDePersonajes.Length; i++)
         {
-            List<Personaje> perso = gruposDePersonajes[i];
+            List<Enemigo> perso = gruposDePersonajes[i];
             foreach (var pers in perso)
             {
                 Console.WriteLine("\n\nMostrado de los Datos del Enemigo["+i+"]["+i+"]"); //puse i pero lo importante es que si funciona
@@ -44,18 +44,19 @@ public class Program
                 Console.WriteLine("Velocidad: " + pers.Velocidad);
                 Console.WriteLine("Destreza: " + pers.Destreza);
                 Console.WriteLine("Nivel: " + pers.Nivel);
-                Console.WriteLine("Apunte: " + pers.Apuntes);
                 Console.WriteLine("Memoria: " + pers.Memoria);
                 Console.WriteLine("Talemto: " + pers.Talento);
                 Console.WriteLine("Salud: " + pers.Salud);
             }
         } */  //Bloque de código para mostrar el array de listas de enemigos
 
-
         //Creo una funcion para seleccionar un enemigo valiendome del nivel de personaje y de el array grupoDePersonajes
         Enemigo Enemigo1 = SeleccionarEnemigo(Player.Nivel, gruposDePersonajes);
         Console.WriteLine("\n\nDatos Del Enemigo");
         Enemigo1.MostrarPersonaje();
+
+
+
 
     }
 
@@ -74,11 +75,10 @@ public class Program
 
         Console.Write("Ingrese la fecha de nacimiento del personaje (yyyy-MM-dd): ");
         nuevoPersonaje.FechaNacimiento = DateTime.Parse(Console.ReadLine()); // manejar la insercion de una fecha erronea
-
         return nuevoPersonaje;
     }
 
-    static List<Enemigo> CargarListasDePersonajes(int CantVueltas, int minRamdom)
+    static List<Enemigo> CargarListasDePersonajes(int CantVueltas, int minRamdom, int nivel)
     {
         // Crear una listas de personajes
         List<Enemigo> ListaDePersonajes = new List<Enemigo>();
@@ -91,7 +91,7 @@ public class Program
 
         for (int i = 0; i < CantVueltas; i++)
         {
-            ListaDePersonajes.Add(new Enemigo(minRamdom,10));
+            ListaDePersonajes.Add(new Enemigo(minRamdom,10, nivel));
         }
         return ListaDePersonajes;
     }
