@@ -8,7 +8,7 @@ namespace persistenciaDatos{
     public class PersonajesJson{
 
         //Serializado y Deserializado de los enemigos
-        public void GuardarPersonajes(string nombreArchivo, List<Enemigo>[] grupoEnemigos)
+        public void GuardarEnemigos(string nombreArchivo, List<Enemigo>[] grupoEnemigos)
         {
             //Serializado
             //Console.Write(InformePrograma.CantidadDeProductos);
@@ -37,7 +37,7 @@ namespace persistenciaDatos{
             File.WriteAllText(rutaCompleta, json);
         }
 
-        public Personaje LeerPersonajes(string archivoJSON)
+        public Personaje LeerPlayer(string archivoJSON)
         {
             string rutaCompleta = Path.Combine("ArchivosJSON", archivoJSON);
             string json2 = File.ReadAllText(rutaCompleta);

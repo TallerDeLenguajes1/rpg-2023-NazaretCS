@@ -3,18 +3,19 @@
 
 using FabricaDePersonajes;
 using FabricaDeEnemigos;
+using persistenciaDatos;
 public class Program
 {
     static void Main(string[] args)
     {
-        Personaje Player = CrearPersonajePlayer();
+        Random random = new Random();
         /* Personaje personaje2 = new Personaje(1,10);
         Personaje personaje3 = new Personaje(3,10);
         Personaje personaje4 = new Personaje(5,10);
  */
-        Console.WriteLine("\nDatos del Personaje:");
+        /* Console.WriteLine("\nDatos del Personaje:");
         Player.MostrarPersonaje();
-
+ */
         /* Console.WriteLine("\nDatos del Personaje: 1");
         personaje2.MostrarPersonaje();
 
@@ -25,16 +26,16 @@ public class Program
         personaje4.MostrarPersonaje(); */
 
         // Crear un arreglo de listas de personajes
-        List<Enemigo>[] gruposDePersonajes = new List<Enemigo>[4];
-        gruposDePersonajes[0] = CargarListasDePersonajes(3,1, 1);
-        gruposDePersonajes[1] = CargarListasDePersonajes(3,3, 2);
-        gruposDePersonajes[2] = CargarListasDePersonajes(3,4, 3);
-        gruposDePersonajes[3] = CargarListasDePersonajes(1,6, 4);
-        //Personaje personajeRamdom = gruposDePersonajes[1][2];  // si se puede, hacerlo de eta manera 
+        /* List<Enemigo>[] grupoDeEnemigos = new List<Enemigo>[4];
+        grupoDeEnemigos[0] = CargarListasDePersonajes(3,1, 1);
+        grupoDeEnemigos[1] = CargarListasDePersonajes(3,3, 2);
+        grupoDeEnemigos[2] = CargarListasDePersonajes(3,4, 3);
+        grupoDeEnemigos[3] = CargarListasDePersonajes(1,6, 4); */
+        //Personaje personajeRamdom = grupoDeEnemigos[1][2];  // si se puede, hacerlo de eta manera 
         
-        /* for (int i = 0; i < gruposDePersonajes.Length; i++)
+        /* for (int i = 0; i < grupoDeEnemigos.Length; i++)
         {
-            List<Enemigo> perso = gruposDePersonajes[i];
+            List<Enemigo> perso = grupoDeEnemigos[i];
             foreach (var pers in perso)
             {
                 Console.WriteLine("\n\nMostrado de los Datos del Enemigo["+i+"]["+i+"]"); //puse i pero lo importante es que si funciona
@@ -51,18 +52,68 @@ public class Program
         } */  //Bloque de código para mostrar el array de listas de enemigos
 
         //Creo una funcion para seleccionar un enemigo valiendome del nivel de personaje y de el array grupoDePersonajes
-        Enemigo Enemigo1 = SeleccionarEnemigo(Player.Nivel, gruposDePersonajes);
+        /* Enemigo Enemigo1 = SeleccionarEnemigo(Player.Nivel, grupoDeEnemigos);
         Console.WriteLine("\n\nDatos Del Enemigo");
-        Enemigo1.MostrarPersonaje();
+        Enemigo1.MostrarPersonaje(); */
 
+        PersonajesJson manejoDeDatos = new PersonajesJson();
+        /* manejoDeDatos.GuardarEnemigos("Enemigos", grupoDeEnemigos);
 
+        manejoDeDatos.GuardarPlayer("Player", player); */
+        bool existeResultado = manejoDeDatos.Existe("Enemigos"); 
 
+        if (manejoDeDatos.Existe("Enemigos"))
+        {
+            Console.WriteLine("\nMostrado de los Datos de los Enemigos\n");
+            Console.WriteLine("**************************************\n");
+            List<Enemigo>[] GrupoEnemigos = manejoDeDatos.LeerEnemigos("Enemigos");
+            for (int i = 0; i < GrupoEnemigos.Length; i++)
+            {
+                foreach (var enemigo in GrupoEnemigos[i])
+                {
+                    enemigo.MostrarPersonaje();
+                    Console.WriteLine("\n");
+                }
+            }
+        } else {
+            // Crear un arreglo de listas de personajes
+            List<Enemigo>[] grupoDeEnemigos = new List<Enemigo>[4];
+            grupoDeEnemigos[0] = CargarListasDePersonajes(3, 1, 1, 10);
+            grupoDeEnemigos[1] = CargarListasDePersonajes(3, 2, 3, 10);
+            grupoDeEnemigos[2] = CargarListasDePersonajes(3, 3, 4, 10);
+            grupoDeEnemigos[3] = CargarListasDePersonajes(1, 4, 6, 10);
 
+            //Muestro los enemigos
+            Console.WriteLine("\nMostrado de los Datos de los Enemigos Creados\n");
+            Console.WriteLine("**************************************\n");
+            
+            for (int i = 0; i < grupoDeEnemigos.Length; i++)
+            {
+                foreach (var enemigo in grupoDeEnemigos[i])
+                {
+                    enemigo.MostrarPersonaje();
+                    Console.WriteLine("\n");
+                }
+            }
+        }
+
+        if (manejoDeDatos.Existe("Player"))
+        {
+            //Console.WriteLine("\nEl archivo si existe de player si existe");
+            Personaje playerr = manejoDeDatos.LeerPlayer("Player");
+            Console.WriteLine("Mostrado de Player:\n");
+            playerr.MostrarPersonaje();
+        } else {
+            Console.WriteLine("Cargado de los datos del personaje: ");
+            Personaje playerr = CrearPersonajePlayer();
+            Console.WriteLine("Mostrado de Player:");
+            playerr.MostrarPersonaje();
+        }
     }
 
     static Personaje CrearPersonajePlayer()
     {
-        Personaje nuevoPersonaje = new Personaje(1,10);
+        Personaje nuevoPersonaje = new Personaje();
 
         Console.Write("Ingrese el nombre del personaje: ");
         nuevoPersonaje.Nombre = Console.ReadLine();
@@ -78,8 +129,9 @@ public class Program
         return nuevoPersonaje;
     }
 
-    static List<Enemigo> CargarListasDePersonajes(int CantVueltas, int minRamdom, int nivel)
+    static List<Enemigo> CargarListasDePersonajes(int CantVueltas,  int nivel, int minRamdom, int maxRamdom)
     {
+        Random random = new Random();
         // Crear una listas de personajes
         List<Enemigo> ListaDePersonajes = new List<Enemigo>();
         
@@ -89,9 +141,16 @@ public class Program
             ListaDePersonajes = new List<Enemigo>();
         }
 
+
+
         for (int i = 0; i < CantVueltas; i++)
         {
-            ListaDePersonajes.Add(new Enemigo(minRamdom,10, nivel));
+            ListaDePersonajes.Add(new Enemigo());
+            ListaDePersonajes[i].Nivel = nivel;  //Mofico atributo por atributo de cada clase para solucionar el problema del constructor parametrizado
+            ListaDePersonajes[i].Velocidad = random.Next(minRamdom, maxRamdom);
+            ListaDePersonajes[i].Destreza = random.Next(minRamdom, maxRamdom);
+            ListaDePersonajes[i].Memoria = random.Next(minRamdom, maxRamdom);
+            ListaDePersonajes[i].Talento = random.Next(minRamdom, maxRamdom);
         }
         return ListaDePersonajes;
     }

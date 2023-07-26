@@ -21,7 +21,7 @@ namespace FabricaDePersonajes {
         public int Salud { get; private set; }
 
         // Constructor de la clase Personaje
-        public Personaje(int minRamdom, int maxRamdom)
+        public Personaje()
         {
             // Generar el tipo aleatoriamente
             Random random = new Random();
@@ -30,14 +30,14 @@ namespace FabricaDePersonajes {
             Apodo = apodoMaterias[random.Next(apodoMaterias.Length)];
             Carrera = carreras[random.Next(carreras.Length)];
             FechaNacimiento = DateTime.MinValue;
-            Nivel = 0;
+            Nivel = 1;
 
             // Generar atributos aleatorios entre 1 y 10
-            Velocidad = random.Next(minRamdom, maxRamdom);
-            Destreza = random.Next(minRamdom, maxRamdom);
-            Apuntes = random.Next(minRamdom, maxRamdom);
-            Memoria = random.Next(minRamdom, maxRamdom);
-            Talento = random.Next(minRamdom, maxRamdom);
+            Velocidad = random.Next(1, 10);
+            Destreza = random.Next(1, 10);
+            Apuntes = random.Next(1, 10);
+            Memoria = random.Next(1, 10);
+            Talento = random.Next(1, 10);
             Salud = 100; // Multiplicamos por 10 para obtener un valor entre 10 y 100
         }
 
