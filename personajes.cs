@@ -13,12 +13,12 @@ namespace FabricaDePersonajes {
         public DateTime FechaNacimiento { get; set; }
         public int Edad => (int)((DateTime.Now - FechaNacimiento).TotalDays / 365.25); // calculo de la edad basado en la fecha de nacimiento
         public int Velocidad { get; private set; }
-        public int Destreza { get; private set; }
+        public double Animos { get; private set; }
         public int Nivel { get; private set; }
-        public int Apuntes { get; private set; }
+        public double Apuntes { get; private set; }
         public int Memoria { get; private set; }
         public int Talento { get; private set; }
-        public int Salud { get; private set; }
+        public double Salud { get; private set; }
 
         // Constructor de la clase Personaje
         public Personaje()
@@ -34,11 +34,11 @@ namespace FabricaDePersonajes {
 
             // Generar atributos aleatorios entre 1 y 10
             Velocidad = random.Next(1, 10);
-            Destreza = random.Next(1, 10);
+            Animos = random.Next(1, 10);
             Apuntes = random.Next(1, 10);
             Memoria = random.Next(1, 10);
             Talento = random.Next(1, 10);
-            Salud = 100; // Multiplicamos por 10 para obtener un valor entre 10 y 100
+            Salud = 1000; // Multiplicamos por 10 para obtener un valor entre 10 y 100
         }
 
         // Método para mostrar los datos del personaje
@@ -51,13 +51,64 @@ namespace FabricaDePersonajes {
             Console.WriteLine("Fecha de Nacimiento: {0}", FechaNacimiento.ToShortDateString());
             Console.WriteLine("Edad: {0}", Edad);
             Console.WriteLine("Velocidad: {0}", Velocidad);
-            Console.WriteLine("Destreza: {0}", Destreza);
+            Console.WriteLine("Destreza: {0}", Animos);
             Console.WriteLine("Nivel: {0}", Nivel);
             Console.WriteLine("Apunte: {0}", Apuntes);
             Console.WriteLine("Memoria: {0}", Memoria);
             Console.WriteLine("Talento: {0}", Talento);
             Console.WriteLine("Salud: {0}", Salud);
         }
+
+        public int efectividadAtaque()
+        {
+            Random rand = new Random();
+            int efectividad = rand.Next(0,101);
+            return efectividad;
+        }
+
+        public double ataque()
+        {
+            return(Animos * Memoria * Nivel * Talento);
+        }
+
+        public double defenza()
+        {
+            return(Apuntes * Velocidad);
+        }
+
+        public int constanteAjuste()
+        {
+            return 500;
+        }
+
+        public double danioProvocado()
+        {
+            return ((((ataque()) * (efectividadAtaque())) - defenza()) / constanteAjuste());
+        }
+
+        public double GetSalud() => this.Salud;
+        public double GetApuntes() => this.Apuntes;
+        public double GetAnimos() => this.Animos;
+        public double SetSalud(double nuevaSalud) => this.Salud = Math.Round(nuevaSalud,3);
+        public double SetApuntes(double nuevosApuntes) => this.Apuntes = nuevosApuntes;
+        public double SetAnimos(double nuevosAnimos) => this.Animos = nuevosAnimos;
+
+        public void actualizaSalud(double danioRecibido)
+        {
+            double saludActualizada = this.GetSalud();
+            saludActualizada -= danioRecibido;
+            this.SetSalud(saludActualizada);
+        }
+
+/*           
+
+        public double valorAtaque() => Math.Round(this.PD * this.efectividaDisparo(),3);
+        public double poderDefensa() => Math.Round(this.armadura * this.velocidad,3);
+        //Get de salud
+        public double GetSalud() => this.Salud;
+
+        //Metodos Setter
+        public double SetSalud(double nuevaSalud) => this.Salud = Math.Round(nuevaSalud,3); */
     }
 
 }

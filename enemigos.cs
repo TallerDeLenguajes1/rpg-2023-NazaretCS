@@ -17,7 +17,7 @@ namespace FabricaDeEnemigos {
         public int Nivel { get;  set; }
         public int Memoria { get;  set; }
         public int Talento { get;  set; }
-        public int Salud { get;  set; }
+        public double Salud { get;  set; }
 
         // Constructor de la clase Personaje
         
@@ -104,6 +104,43 @@ namespace FabricaDeEnemigos {
             Console.WriteLine("Memoria: {0}", Memoria);
             Console.WriteLine("Talento: {0}", Talento);
             Console.WriteLine("Salud: {0}", Salud);
+        }
+
+        public int efectividadAtaque()
+        {
+            Random rand = new Random();
+            int efectividad = rand.Next(0,101);
+            return efectividad;
+        }
+
+        public double ataque()
+        {
+            return(Destreza * Memoria * Nivel * Talento);
+        }
+
+        public double defenza()
+        {
+            return(Memoria * Velocidad);
+        }
+
+        public int constanteAjuste()
+        {
+            return 500;
+        }
+
+        public double danioProvocado()
+        {
+            return ((((ataque()) * (efectividadAtaque())) - defenza()) / constanteAjuste());
+        }
+
+        public double GetSalud() => this.Salud;
+        public double SetSalud(double nuevaSalud) => this.Salud = Math.Round(nuevaSalud,3);
+
+        public void actualizaSalud(double danioRecibido)
+        {
+            double saludActualizada = this.GetSalud();
+            saludActualizada -= danioRecibido;
+            this.SetSalud(saludActualizada);
         }
     }
 }
