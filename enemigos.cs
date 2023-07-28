@@ -94,16 +94,26 @@ namespace FabricaDeEnemigos {
         // Método para mostrar los datos del personaje
         public void MostrarPersonaje()
         {
-            Console.WriteLine("Tipo: {0}", Tipo);
-            Console.WriteLine("Nombre: {0}", Nombre);
-            Console.WriteLine("Apodo: {0}", Apodo);
-            Console.WriteLine("Carrera: {0}", Carrera);
-            Console.WriteLine("Velocidad: {0}", Velocidad);
-            Console.WriteLine("Destreza: {0}", Destreza);
-            Console.WriteLine("Nivel: {0}", Nivel);
-            Console.WriteLine("Memoria: {0}", Memoria);
-            Console.WriteLine("Talento: {0}", Talento);
-            Console.WriteLine("Salud: {0}", Salud);
+            Console.WriteLine("                 Nombre: {0}", Nombre);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Apodo: {0}", Apodo);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Tipo: {0}", Tipo);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Carrera: {0}", Carrera);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Velocidad: {0}", Velocidad);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Destreza: {0}", Destreza);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Nivel: {0}", Nivel);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Memoria: {0}", Memoria);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Talento: {0}", Talento);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Salud: {0}", Salud);
+            Thread.Sleep(400);
         }
 
         public int efectividadAtaque()

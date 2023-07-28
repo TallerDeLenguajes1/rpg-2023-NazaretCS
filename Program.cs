@@ -1,137 +1,327 @@
 ﻿// See https://aka.ms/new-console-template for more information
 /* Console.WriteLine("Hello, World!"); */
 
+using System;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+
+using ChuckNorrisJokes;
 using FabricaDePersonajes;
 using FabricaDeEnemigos;
 using persistenciaDatos;
 public class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
-        Random random = new Random();
-        /* Personaje personaje2 = new Personaje(1,10);
-        Personaje personaje3 = new Personaje(3,10);
-        Personaje personaje4 = new Personaje(5,10);
- */
-        /* Console.WriteLine("\nDatos del Personaje:");
-        Player.MostrarPersonaje();
- */
-        /* Console.WriteLine("\nDatos del Personaje: 1");
-        personaje2.MostrarPersonaje();
-
-        Console.WriteLine("\nDatos del Personaje: 3");
-        personaje3.MostrarPersonaje();
-
-        Console.WriteLine("\nDatos del Personaje: 4");
-        personaje4.MostrarPersonaje(); */
-
-        // Crear un arreglo de listas de personajes
-        /* List<Enemigo>[] grupoDeEnemigos = new List<Enemigo>[4];
-        grupoDeEnemigos[0] = CargarListasDePersonajes(3,1, 1);
-        grupoDeEnemigos[1] = CargarListasDePersonajes(3,3, 2);
-        grupoDeEnemigos[2] = CargarListasDePersonajes(3,4, 3);
-        grupoDeEnemigos[3] = CargarListasDePersonajes(1,6, 4); */
-        //Personaje personajeRamdom = grupoDeEnemigos[1][2];  // si se puede, hacerlo de eta manera 
+        Console.Write(@"
         
-        /* for (int i = 0; i < grupoDeEnemigos.Length; i++)
-        {
-            List<Enemigo> perso = grupoDeEnemigos[i];
-            foreach (var pers in perso)
-            {
-                Console.WriteLine("\n\nMostrado de los Datos del Enemigo["+i+"]["+i+"]"); //puse i pero lo importante es que si funciona
-                Console.WriteLine("Nombre: " + pers.Nombre);
-                Console.WriteLine("Apodo: " + pers.Apodo);
-                Console.WriteLine("Carrera: " + pers.Carrera);
-                Console.WriteLine("Velocidad: " + pers.Velocidad);
-                Console.WriteLine("Destreza: " + pers.Destreza);
-                Console.WriteLine("Nivel: " + pers.Nivel);
-                Console.WriteLine("Memoria: " + pers.Memoria);
-                Console.WriteLine("Talemto: " + pers.Talento);
-                Console.WriteLine("Salud: " + pers.Salud);
-            }
-        } */  //Bloque de código para mostrar el array de listas de enemigos
+        
+        
 
-        //Creo una funcion para seleccionar un enemigo valiendome del nivel de personaje y de el array grupoDePersonajes
-        /* Enemigo Enemigo1 = SeleccionarEnemigo(Player.Nivel, grupoDeEnemigos);
-        Console.WriteLine("\n\nDatos Del Enemigo");
-        Enemigo1.MostrarPersonaje(); */
 
+
+
+
+
+
+
+        
+
+        
+        
+        ");
+        Console.Write(@"
+        ███████╗░█████╗░░█████╗░██╗░░░██╗██╗░░░░████████╗░█████╗░██████╗░░░░░██████╗██╗░░░██╗██████╗░██╗░░░██╗██╗██╗░░░██╗███████╗
+        ██╔════╝██╔══██╗██╔══██╗██║░░░██║██║░░░░╚══██╔══╝██╔══██╗██╔══██╗░░░██╔════╝██║░░░██║██╔══██╗██║░░░██║██║██║░░░██║██╔════╝
+        █████╗░░███████║██║░░╚═╝██║░░░██║██║░░░░░░░██║░░░███████║██║░░██║░░░╚█████╗░██║░░░██║██████╔╝╚██╗░██╔╝██║╚██╗░██╔╝█████╗░░
+        ██╔══╝░░██╔══██║██║░░██╗██║░░░██║██║░░░░░░░██║░░░██╔══██║██║░░██║░░░░╚═══██╗██║░░░██║██╔══██╗░╚████╔╝░██║░╚████╔╝░██╔══╝░░
+        ██║░░░░░██║░░██║╚█████╔╝╚██████╔╝███████╗░░██║░░░██║░░██║██████╔╝░░░██████╔╝╚██████╔╝██║░░██║░░╚██╔╝░░██║░░╚██╔╝░░███████╗
+        ╚═╝░░░░░╚═╝░░╚═╝░╚════╝░░╚═════╝░╚══════╝░░╚═╝░░░╚═╝░░╚═╝╚═════╝░░░░╚═════╝░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░╚═╝░░░╚══════╝"
+        );
+
+        Random random = new Random();
         PersonajesJson manejoDeDatos = new PersonajesJson();
-        /* manejoDeDatos.GuardarEnemigos("Enemigos", grupoDeEnemigos);
+        
+        Console.Write(@"
+        
+        
+        
 
-        manejoDeDatos.GuardarPlayer("Player", player); */
-        bool existeResultado = manejoDeDatos.Existe("Enemigos"); 
+        ");
+        
+        if (manejoDeDatos.Existe("Player.json"))
+        {
+            Console.Write(@"
+                > Player Detectado.
+                > Obteniendo datos.
+
+                > Aguarde un momento por favor...
+            ");
+            Thread.Sleep(5000);
+            Console.Write("     Datos Cargados! Presiona una Tecla para continuar...\n");
+            Console.ReadKey();
+        } else {
+            Console.Write(@"
+                > Personalize su Estudiante:
+            ");
+        }
+        Personaje player = VerificarExistenciaPlayer();
+        
+        Console.WriteLine("\n\n                   DATOS DE TU PERSONAJE:");
+        player.MostrarPersonaje();
+
+        Console.Write("\n\n\n                   Generando Enemigos...\n                   PREPARATE!!");
+        List<Enemigo>[] grupoDeEnemigos = VerificarExistenciaDeEnemigos();
+        Thread.Sleep(3000);
+        Console.Write("\n\n                 Seleccionando Tu PRIMER ENEMIGO");
+        Thread.Sleep(3000);
+        Enemigo enemigoNivel1 = SeleccionarEnemigo(0, grupoDeEnemigos);
+        Console.Write("\n                   Tu enemigo esta LISTO para la Lucha\n");
+        Console.WriteLine("\n\n                   DATOS DE TU ENEMIGO:");
+        enemigoNivel1.MostrarPersonaje();
+        Console.Write("\n\n\n                   Preciona una tecla cualquiera cuando TU tambien lo estes:\n\n");
+        Console.ReadKey();
 
         //Realizo una funcion para verificar la existencia del enemigo
-        List<Enemigo>[] grupoDeEnemigos = VerificarExistenciaDeEnemigos();
+        
 
         //Realizo una funcion para verificar la existencia de un player
-        Personaje player = VerificarExistenciaPlayer();
-
-        Console.WriteLine("\nCALCULO EL DAÑO QUE PROVOCARA EL PALYER");
-        double danioProvocado = player.danioProvocado();
-        Console.WriteLine("El daño es de: " + danioProvocado);
+        //Console.WriteLine("\nMOSTRADO DE DATOS DEL PLAYER");
+        //player.MostrarPersonaje();
+        //Console.WriteLine("\nCALCULO EL DAÑO QUE PROVOCARA EL PALYER");
+        //double danioProvocado = player.danioProvocado();
+        //Console.WriteLine("El daño es de: " + danioProvocado);
         
 
         //Selecciono el primer enemigo del player
-        Enemigo enemigoNivel1 = SeleccionarEnemigo(1, grupoDeEnemigos);  // si se puede, hacerlo de eta manera 
-        enemigoNivel1.MostrarPersonaje();
-        Console.WriteLine("\nCALCULO EL DAÑO QUE PROVOCARA EL Enemigo");
-        double danioProvocado2 = enemigoNivel1.danioProvocado();
-        Console.WriteLine("El daño es de: " + danioProvocado2);
+          // si se puede, hacerlo de eta manera 
 
+        /* Console.WriteLine("\n\nDatos del Primer Enemigo:");
+        enemigoNivel1.MostrarPersonaje(); */
+        //Console.WriteLine("\n\nCALCULO EL DAÑO QUE PROVOCARA EL Enemigo");
+        double danioProvocado = 0;
+        //Console.WriteLine("El daño es de: " + danioProvocado2);
+
+        graficosPelea();
+        Console.ReadKey();
         //Desarrollo la funcion convate:
         bool ResultadoPelea = Pelea(player, enemigoNivel1);
         if (ResultadoPelea)
         {
-            player.actualizaSalud(100);
-            Console.WriteLine("\nFelisidades sobrevisite a la materia: Salud Restaurada" + player.Salud);
+            Console.Write(@"
+
+
+
+            **************************************************************************************
+            *                                                                                    *
+            *           ███████████████████████████████████████████████████████████████          *
+            *           █▄─▄▄─█▄─▄▄─█▄─▄███▄─▄█─▄▄▄─█▄─▄█▄─▄▄▀██▀▄─██▄─▄▄▀█▄─▄▄─█─▄▄▄▄█          *
+            *           ██─▄████─▄█▀██─██▀██─██─███▀██─███─██─██─▀─███─██─██─▄█▀█▄▄▄▄─█          *
+            *           ▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▀▀▄▄▀▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀          *
+            *                                                                                    *
+            *                             Player: {0}                                            *
+            *                               VENCISTE EN TU PRIMER PELEA                          *
+            *                                                                                    *
+            *                                                                                    *
+            **************************************************************************************
+            ",player.Nombre);
+            /* Console.WriteLine("\n\nMostrado de datos del personaje:");
+            player.MostrarPersonaje(); */
+            //player.SetSalud(1000);
+            //Console.WriteLine("\nFelisidades sobrevisite a la materia: Salud Restaurada" + player.Salud);
             // realizar las actualizaciones / bonificaciones
+            Console.WriteLine("\n\n\n              > Aplicando Bonos Por vencedor");
+            Thread.Sleep(1000);
+            Console.WriteLine("               > Cada vez que le ganes a una materia tus avilidades seran potenciadas!");
+            Thread.Sleep(1000);
             DarBonos(player);
-            Console.WriteLine("\nPreparando la siguiente materia: ");
+            //player.MostrarPersonaje();
+            Console.WriteLine("\n\n\n\n             PREPARANDO TU SIGUIENTE ENEMIGA... \n             Pulsa una tecla cuando estes listo para conocerla");
+            Console.ReadKey();
+            Enemigo enemigoNivel2 = SeleccionarEnemigo(1, grupoDeEnemigos);
+            //Console.WriteLine("\nCALCULO EL DAÑO QUE PROVOCARA EL Enemigo");
+            //danioProvocado = enemigoNivel1.danioProvocado();
+            //Console.WriteLine("El daño es de: " + danioProvocado);
 
+            Console.WriteLine("\n\n                   DATOS DE TU ENEMIGA:");
+            enemigoNivel2.MostrarPersonaje();
+            Console.Write("\n\n\n                   Preciona una tecla cuando estes lista para destrozarla:\n\n");
             
+            graficosPelea();
+            Console.ReadKey();
+            ResultadoPelea = Pelea(player, enemigoNivel2);
 
-            Enemigo enemigoNivel2 = SeleccionarEnemigo(2, grupoDeEnemigos);
-            bool ResultadoPelea2 = Pelea(player, enemigoNivel2);
-
-            if (ResultadoPelea2)
+            if (ResultadoPelea)
             {
-                player.actualizaSalud(100);
-                Console.WriteLine("\nFelisidades sobrevisite a la materia: Salud Restaurada" + player.Salud);
+                Console.Write(@"
+
+
+
+            **************************************************************************************
+            *                                                                                    *
+            *           ███████████████████████████████████████████████████████████████          *
+            *           █▄─▄▄─█▄─▄▄─█▄─▄███▄─▄█─▄▄▄─█▄─▄█▄─▄▄▀██▀▄─██▄─▄▄▀█▄─▄▄─█─▄▄▄▄█          *
+            *           ██─▄████─▄█▀██─██▀██─██─███▀██─███─██─██─▀─███─██─██─▄█▀█▄▄▄▄─█          *
+            *           ▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▀▀▄▄▀▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀          *
+            *                                                                                    *
+            *                             Player: {0}                                            *
+            *                               VENCISTE EN TU SEGUNDA PELEA                         *
+            *                         Cada vez estas mas cerca de tu titulo!!                    *
+            *                                                                                    *
+            **************************************************************************************
+            ",player.Nombre);
+                //player.SetSalud(1000);
+                //Console.WriteLine("\nFelisidades sobrevisite a la materia: Salud Restaurada" + player.Salud);
                 // realizar las actualizaciones / bonificaciones
+                Console.WriteLine("\n\n\n              > Aplicando Bonos Por vencedor");
                 DarBonos(player);
-                Console.WriteLine("\nPreparando la siguiente materia: ");
+
+
+                
+                Console.WriteLine("\n\n\n\n             PREPARANDO TU SIGUIENTE ENEMIGA... \n             Pulsa una tecla cuando estes listo para conocerla");
+                Console.ReadKey();
 
                 Enemigo enemigoNivel3 = SeleccionarEnemigo(2, grupoDeEnemigos);
-                bool ResultadoPelea3 = Pelea(player, enemigoNivel3);
+                //Console.WriteLine("\nCALCULO EL DAÑO QUE PROVOCARA EL Enemigo");
+                //danioProvocado = enemigoNivel3.danioProvocado();
+                //Console.WriteLine("El daño es de: " + danioProvocado);
+                //enemigoNivel3.MostrarPersonaje();
+                Console.WriteLine("\n\n                   DATOS DE TU ENEMIGA:");
+                enemigoNivel3.MostrarPersonaje();
+                Console.Write("\n\n\n                   Preciona una tecla cuando estes lista para destrozarla:\n\n");
+                
+                graficosPelea();
+                Console.ReadKey();
+                ResultadoPelea= Pelea(player, enemigoNivel3);
 
-                if (ResultadoPelea3)
+                if (ResultadoPelea)
                 {
-                    player.actualizaSalud(100);
-                    Console.WriteLine("\nFelisidades sobrevisite a la materia: Salud Restaurada" + player.Salud);
+                    //player.SetSalud(1000);
+                    //Console.WriteLine("\nFelisidades sobrevisite a la materia: Salud Restaurada" + player.Salud);
                     // realizar las actualizaciones / bonificaciones
+                    Console.WriteLine("\n\n\n              > Aplicando Bonos Por vencedor");
                     DarBonos(player);
 
-                    Console.WriteLine("\nPREPARANDO EL PROYECTO FINAL ");
-                    bool ResultadoPelea4 = Pelea(player, grupoDeEnemigos[3][0]);
+                    //Console.WriteLine("\nPREPARANDO EL PROYECTO FINAL ");
+                    grupoDeEnemigos[3][0].Nombre = "TESIS";
+                    grupoDeEnemigos[3][0].Apodo = "Tesis";
+                    ResultadoPelea = Pelea(player, grupoDeEnemigos[3][0]);
 
-                    if (ResultadoPelea4)
+                    Console.Write("\n\n\n              Antes de Seguir Te voy a contar un chiste");
+                    await MostrarChisteDeChuckNorris();
+                    Console.Write(@"
+
+
+
+                    **************************************************************************************
+                    *                                                                                    *
+                    *                                                                                    *
+                    *                 Muy bien {0} hasta ahora todo fue bastante Tranquilo               *
+                    *                Pero ahora te enfrentaras al miedo de todo Estudiante               *
+                    *                         ¿Podras conseguir la gloria?                               *
+                    *                                                                                    *
+                    *                                                                                    *
+                    *                   ███████████████████████████████████████████                      *
+                    *                   █▄─▄████▀▄─████─▄─▄─█▄─▄▄─█─▄▄▄▄█▄─▄█─▄▄▄▄█                      *
+                    *                   ██─██▀██─▀─██████─████─▄█▀█▄▄▄▄─██─██▄▄▄▄─█                      *
+                    *                   ▀▄▄▄▄▄▀▄▄▀▄▄▀▀▀▀▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▄▀                      *
+                    *                                                                                    *
+                    *                                                                                    *
+                    *                                                                                    *
+                    **************************************************************************************
+                    ",player.Nombre);
+                    if (ResultadoPelea)
                     {
-                        Console.WriteLine("\nFelicidades GANASTE TU TITULO");
+                        Console.Write(@"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        **************************************************************************************
+                        *                                                                                    *
+                        *                                                                                    *
+                        *                                                                                    *
+                        *                                                                                    *
+                        *                   ███████████████████████████████████████████                      *
+                        *                   █▄─▄████▀▄─████─▄─▄─█▄─▄▄─█─▄▄▄▄█▄─▄█─▄▄▄▄█                      *
+                        *                   *******************************************                      *
+                        *                   ▀▄▄▄▄▄▀▄▄▀▄▄▀▀▀▀▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▄▄▀                      *
+                        *                                                                                    *
+                        *                           ROMPISTE LA TESISSSSSS                                   *
+                        *                                                                                    *
+                        *                                                                                    *
+                        **************************************************************************************
+                        ",player.Nombre);
+
+
+                        Thread.Sleep(3000);
+
+                        Console.Write(@"
+
+
+
+
+                        ***********************************************************************************************************************************
+                        *                                                                                                                                 *
+                        *                                                                                                                                 *
+                        *                                                                                                                                 *
+                        *    ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████     *
+                        *    █░░░░░░░░░░░░░░█░░░░░░████████████░░░░░░░░░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░██░░░░░░█░░░░░░█████████░░░░░░░░░░░░░░█     *
+                        *    █░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░████████████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░█████████░░▄▀▄▀▄▀▄▀▄▀░░█     *
+                        *    █░░▄▀░░░░░░░░░░█░░▄▀░░████████████░░░░░░▄▀░░░░░░█░░░░▄▀░░░░█░░░░░░▄▀░░░░░░█░░▄▀░░██░░▄▀░░█░░▄▀░░█████████░░▄▀░░░░░░▄▀░░█     * 
+                        *    █░░▄▀░░█████████░░▄▀░░████████████████░░▄▀░░███████░░▄▀░░███████░░▄▀░░█████░░▄▀░░██░░▄▀░░█░░▄▀░░█████████░░▄▀░░██░░▄▀░░█     *
+                        *    █░░▄▀░░░░░░░░░░█░░▄▀░░████████████████░░▄▀░░███████░░▄▀░░███████░░▄▀░░█████░░▄▀░░██░░▄▀░░█░░▄▀░░█████████░░▄▀░░██░░▄▀░░█     *
+                        *    █░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░████████████████░░▄▀░░███████░░▄▀░░███████░░▄▀░░█████░░▄▀░░██░░▄▀░░█░░▄▀░░█████████░░▄▀░░██░░▄▀░░█     *
+                        *    █░░▄▀░░░░░░░░░░█░░▄▀░░████████████████░░▄▀░░███████░░▄▀░░███████░░▄▀░░█████░░▄▀░░██░░▄▀░░█░░▄▀░░█████████░░▄▀░░██░░▄▀░░█     *
+                        *    █░░▄▀░░█████████░░▄▀░░████████████████░░▄▀░░███████░░▄▀░░███████░░▄▀░░█████░░▄▀░░██░░▄▀░░█░░▄▀░░█████████░░▄▀░░██░░▄▀░░█     *
+                        *    █░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░░░████████░░▄▀░░█████░░░░▄▀░░░░█████░░▄▀░░█████░░▄▀░░░░░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░▄▀░░█     *
+                        *    █░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░████████░░▄▀░░█████░░▄▀▄▀▄▀░░█████░░▄▀░░█████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█     *
+                        *    █░░░░░░░░░░░░░░█░░░░░░░░░░░░░░████████░░░░░░█████░░░░░░░░░░█████░░░░░░█████░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█     *
+                        *    ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████     *                       *
+                        *                                                                                                                                 *
+                        *                                                                                                                                 *
+                        *                      Se entrega este Titulo al sr/a  {0} en virtud de reconocimiento al esfuerzo y                                                                                                           * 
+                        *                       dedicación demostrado al superar cada materia a lo largo de esta carrera.                                                                                                          *
+                        *                                                                                                                                 *
+                        ***********************************************************************************************************************************
+                        ",player.Nombre);
+                    } else {
+                        graficoBatallaPerdida();
+                        await MostrarChisteDeChuckNorris();
                     }
+                } else {
+                    graficoBatallaPerdida();
+                    await MostrarChisteDeChuckNorris();
                 }
 
             } else {
-                Console.WriteLine("OBTUVISTE UN L");
+                /* Console.WriteLine("OBTUVISTE UN L");
                 Console.WriteLine("Mejor suerte a la proxima");
-                Console.WriteLine("Pelea2");
+                Console.WriteLine("Pelea2"); */
+                graficoBatallaPerdida();
+                await MostrarChisteDeChuckNorris();
             }
 
         } else {
-            Console.WriteLine("OBTUVISTE UN L");
+            /* Console.WriteLine("OBTUVISTE UN L");
             Console.WriteLine("Mejor suerte a la proxima");
-            Console.WriteLine("Pelea1");
+            Console.WriteLine("Pelea1"); */
+            graficoBatallaPerdida();
+            await MostrarChisteDeChuckNorris();
             
         }
     }
@@ -140,17 +330,28 @@ public class Program
     {
         Personaje nuevoPersonaje = new Personaje();
 
-        Console.Write("Ingrese el nombre del personaje: ");
+        Console.Write("     - Ingrese el nombre del personaje: ");
         nuevoPersonaje.Nombre = Console.ReadLine();
 
-        Console.Write("Ingrese el apodo del personaje: ");
+        Console.Write("                 - Ingrese el apodo del personaje: ");
         nuevoPersonaje.Apodo = Console.ReadLine();
 
-        Console.Write("Ingrese la carrera del personaje: ");
+        Console.Write("                 - Ingrese la carrera del personaje: ");
         nuevoPersonaje.Carrera = Console.ReadLine();
 
-        Console.Write("Ingrese la fecha de nacimiento del personaje (yyyy-MM-dd): ");
-        nuevoPersonaje.FechaNacimiento = DateTime.Parse(Console.ReadLine()); // manejar la insercion de una fecha erronea
+        Console.Write("                 - Ingrese la fecha de nacimiento del personaje (dd/MM/yyyy): ");
+        string fechaIngresada = Console.ReadLine();
+        if (DateTime.TryParse(fechaIngresada, out DateTime fechaNacimiento))
+        {
+            //Console.WriteLine("Fecha de Nacimiento: " + fechaNacimiento.ToShortDateString());
+            nuevoPersonaje.FechaNacimiento = fechaNacimiento;
+        }
+        /* nuevoPersonaje.FechaNacimiento = DateTime.Parse(Console.ReadLine());*/
+        Console.Write("\n                 Perfecto! Nosotros nos encargaremos de terminar de crear tu Personaje:\n");
+        Console.Write("                 Solo danos unos segundos...");
+        Thread.Sleep(5000); // para que espere...
+        Console.Write("\n                 La creacion se concreto con Exito! Presione una tecla para continuar");
+        Console.ReadKey();
         return nuevoPersonaje;
     }
 
@@ -193,31 +394,31 @@ public class Program
     static List<Enemigo>[] VerificarExistenciaDeEnemigos()
     {
         PersonajesJson manejoDeDatos = new PersonajesJson();
-        if (manejoDeDatos.Existe("Enemigos"))
+        if (manejoDeDatos.Existe("Enemigos.json"))
         {
-            Console.WriteLine("\nMostrado de los Datos de los Enemigos\n");
-            Console.WriteLine("**************************************\n");
-            List<Enemigo>[] grupoDeEnemigos = manejoDeDatos.LeerEnemigos("Enemigos");
-            for (int i = 0; i < grupoDeEnemigos.Length; i++)
+            /* Console.WriteLine("\nMostrado de los Datos de los Enemigos\n");
+            Console.WriteLine("**************************************\n");*/
+            List<Enemigo>[] grupoDeEnemigos = manejoDeDatos.LeerEnemigos("Enemigos.json");
+            /*for (int i = 0; i < grupoDeEnemigos.Length; i++)
             {
                 foreach (var enemigo in grupoDeEnemigos[i])
                 {
                     enemigo.MostrarPersonaje();
                     Console.WriteLine("\n");
                 }
-            }
+            } */
 
             return grupoDeEnemigos;
         } else {
             // Crear un arreglo de listas de personajes
             List<Enemigo>[] grupoDeEnemigos = new List<Enemigo>[4];
             grupoDeEnemigos[0] = CargarListasDePersonajes(3, 1, 1, 10);
-            grupoDeEnemigos[1] = CargarListasDePersonajes(3, 2, 3, 10);
-            grupoDeEnemigos[2] = CargarListasDePersonajes(3, 3, 4, 10);
-            grupoDeEnemigos[3] = CargarListasDePersonajes(1, 4, 6, 10);
+            grupoDeEnemigos[1] = CargarListasDePersonajes(3, 2, 2, 10);
+            grupoDeEnemigos[2] = CargarListasDePersonajes(3, 3, 3, 10);
+            grupoDeEnemigos[3] = CargarListasDePersonajes(1, 4, 4, 10);
 
             //Muestro los enemigos
-            Console.WriteLine("\nMostrado de los Datos de los Enemigos Creados\n");
+            /* Console.WriteLine("\nMostrado de los Datos de los Enemigos Creados\n");
             Console.WriteLine("**************************************\n");
             
             for (int i = 0; i < grupoDeEnemigos.Length; i++)
@@ -227,10 +428,10 @@ public class Program
                     enemigo.MostrarPersonaje();
                     Console.WriteLine("\n");
                 }
-            }
+            } */
 
             //Guardo a los enemigos Creados en el JSON correspondiente
-            manejoDeDatos.GuardarEnemigos("Enemigos", grupoDeEnemigos);
+            manejoDeDatos.GuardarEnemigos("Enemigos.json", grupoDeEnemigos);
             return grupoDeEnemigos;
         }
     }
@@ -238,21 +439,21 @@ public class Program
     static Personaje VerificarExistenciaPlayer()
     {
         PersonajesJson manejoDeDatos = new PersonajesJson();
-        if (manejoDeDatos.Existe("Player"))
+        if (manejoDeDatos.Existe("Player.json"))
         {
             //Console.WriteLine("\nEl archivo si existe de player si existe");
-            Personaje playerr = manejoDeDatos.LeerPlayer("Player");
-            Console.WriteLine("Mostrado de Player:\n");
-            playerr.MostrarPersonaje();
+            Personaje playerr = manejoDeDatos.LeerPlayer("Player.json");
+            /* Console.WriteLine("Mostrado de Player:\n");
+            playerr.MostrarPersonaje(); */
             return playerr;
         } else {
-            Console.WriteLine("Cargado de los datos del personaje: ");
+            //Console.WriteLine("Cargado de los datos del personaje: ");
             Personaje playerr = CrearPersonajePlayer();
-            Console.WriteLine("Mostrado de Player:");
-            playerr.MostrarPersonaje();
+            /* Console.WriteLine("Mostrado de Player:");
+            playerr.MostrarPersonaje(); */
 
             //Guardado de los datos del player
-            manejoDeDatos.GuardarPlayer("Player", playerr);
+            manejoDeDatos.GuardarPlayer("Player.json", playerr);
             return playerr;
         }
     }
@@ -278,11 +479,13 @@ public class Program
         }
         if (player.Salud >= 0)
         {
-            Console.WriteLine("SOBREVISTE A LA MATERIA");
+            /* Console.WriteLine("SOBREVISTE A LA MATERIA"); */
+            player.SetSalud(0);
             return true;
         } else {
-            Console.WriteLine("GANADORRRR: La mateira: \n");
-            enemigo.MostrarPersonaje();
+            /* Console.WriteLine("GANADORRRR: La mateira: \n");
+            enemigo.MostrarPersonaje(); */
+            enemigo.SetSalud(0);
             return false;
         }
     }
@@ -296,12 +499,72 @@ public class Program
         Player.SetSalud(Player.GetSalud()+bonoSalud);
         Player.SetAnimos(Player.GetAnimos()+bonoAnimos);
         Player.SetApuntes(Player.GetApuntes()+bonoApuntes);
-        Console.WriteLine("\nBONOS APLICADOS POR GANADOR");
-        Player.MostrarPersonaje();
+        //Console.WriteLine("\nBONOS APLICADOS POR GANADOR");
+        //Player.MostrarPersonaje();
     }
 
+    static void graficosPelea()
+    {
+        Console.Write(@"
+                    A Pelear Entonces!
+
+                     ( •_•)     (•_• )
+                     (ง )ง      ୧( ୧)
+                     / \         / \
+
+
+        ");
+        Thread.Sleep(3000);
+        Console.Write("                ufff fue una pelea dura...\n                       Pero TENEMOS 1 GANADOR:");
+
+    }
+
+    static async void graficoBatallaPerdida()
+    {
+        Console.Write(@"
+            
+            ************************************************************************************************** 
+            *                                                                                                *
+            *                                                                                                *
+            *    ████████████████████████████████████████████████████████████████████████████████████████    *
+            *    █─▄▄─█▄─▄─▀█─▄─▄─█▄─██─▄█▄─█─▄█▄─▄█─▄▄▄▄█─▄─▄─█▄─▄▄─███▄─██─▄█▄─▀█▄─▄█████░█░█▄─▄███░█░█    *
+            *    █─██─██─▄─▀███─████─██─███▄▀▄███─██▄▄▄▄─███─████─▄█▀████─██─███─█▄▀─██████▄█▄██─██▀█▄█▄█    *
+            *     ▄▄▄▄▀▄▄▄▄▀▀▀▄▄▄▀▀▀▄▄▄▄▀▀▀▀▄▀▀▀▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀▄▄▄▄▄▀▀▀▀▄▄▄▄▀▀▄▄▄▀▀▄▄▀▀▀▀▀▀▀▀▀▄▄▄▄▄▀▀▀▀▀    *   *                                                                                                *
+            *                                                                                                *
+            *                                                                                                *
+            *                         Se ve que estudiaste pero no alcanzo...                                *
+            *                                   PERDISTE                                                     *
+            *                                                                                                *
+            **************************************************************************************************
+            
+            ");
+            
+    }
+
+    static async Task MostrarChisteDeChuckNorris()
+        {
+            // URL de la API de Chuck Norris Jokes
+            string apiUrl = "https://api.chucknorris.io/jokes/random";
+
+            // Crea una instancia de HttpClient para realizar la solicitud HTTP
+            using (HttpClient httpClient = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await httpClient.GetAsync(apiUrl); //para que se dispare la solicitud http
+                    response.EnsureSuccessStatusCode();
+                    JokeResponse jokeResponse = await response.Content.ReadFromJsonAsync<JokeResponse>(); //e verifica si la respuesta tiene un código de estado de éxito (por ejemplo, 200)
+
+                    // Imprime el chiste en la consola si todo salio bien
+                    Console.WriteLine($" \n\n\n          Chiste: {jokeResponse.Value}");
+                }
+                catch (HttpRequestException ex) //sino se manejan ls excepciones
+                {
+                    Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+                }
+            }
+        }
    
 }
 
 
-//Pelean pero devo verificar porque siempre ganan las materias 

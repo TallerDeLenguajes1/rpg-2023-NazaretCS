@@ -38,25 +38,38 @@ namespace FabricaDePersonajes {
             Apuntes = random.Next(1, 10);
             Memoria = random.Next(1, 10);
             Talento = random.Next(1, 10);
-            Salud = 1000; // Multiplicamos por 10 para obtener un valor entre 10 y 100
+            Salud = 1000;   //Uno ingresa lleno de vida a la facu
         }
 
         // Método para mostrar los datos del personaje
         public void MostrarPersonaje()
         {
-            Console.WriteLine("Tipo: {0}", Tipo);
-            Console.WriteLine("Nombre: {0}", Nombre);
-            Console.WriteLine("Apodo: {0}", Apodo);
-            Console.WriteLine("Carrera: {0}", Carrera);
-            Console.WriteLine("Fecha de Nacimiento: {0}", FechaNacimiento.ToShortDateString());
-            Console.WriteLine("Edad: {0}", Edad);
-            Console.WriteLine("Velocidad: {0}", Velocidad);
-            Console.WriteLine("Destreza: {0}", Animos);
-            Console.WriteLine("Nivel: {0}", Nivel);
-            Console.WriteLine("Apunte: {0}", Apuntes);
-            Console.WriteLine("Memoria: {0}", Memoria);
-            Console.WriteLine("Talento: {0}", Talento);
-            Console.WriteLine("Salud: {0}", Salud);
+            Console.WriteLine("                 Nombre: {0}", Nombre);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Apodo: {0}", Apodo);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Tipo: {0}", Tipo);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Carrera: {0}", Carrera);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Fecha de Nacimiento: {0}", FechaNacimiento.ToShortDateString());
+            Thread.Sleep(400);
+            Console.WriteLine("                 Edad: {0}", Edad);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Velocidad: {0}", Velocidad);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Animos: {0}", Animos);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Nivel: {0}", Nivel);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Apunte: {0}", Apuntes);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Memoria: {0}", Memoria);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Talento: {0}", Talento);
+            Thread.Sleep(400);
+            Console.WriteLine("                 Salud: {0}", Salud);
+            
         }
 
         public int efectividadAtaque()
@@ -78,7 +91,7 @@ namespace FabricaDePersonajes {
 
         public int constanteAjuste()
         {
-            return 500;
+            return 300;
         }
 
         public double danioProvocado()
